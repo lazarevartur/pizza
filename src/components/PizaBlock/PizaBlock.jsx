@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 import classNames from 'classnames'
-import PropTypes from 'prop-types';
-import Button from "../Button";
-import {useDispatch} from "react-redux";
-import {setPizzaToCart} from "../../redux/actions/cart";
+import PropTypes from 'prop-types'
+import Button from '../Button'
+import { useDispatch } from 'react-redux'
+import { setPizzaToCart } from '../../redux/actions/cart'
 
 const PizzaBlock = ({ item, cartItems }) => {
-  const {id, name, imageUrl, price, types, sizes} = item
+  const { id, name, imageUrl, price, types, sizes } = item
   const dispatch = useDispatch()
   const typesName = ['тонкое', 'традиционное']
   const sizesName = [26, 30, 40]
@@ -19,47 +19,48 @@ const PizzaBlock = ({ item, cartItems }) => {
       imageUrl,
       price,
       type: typesName[activeType],
-      size: activeSize
+      size: activeSize,
     }
     dispatch(setPizzaToCart(data))
   }
-
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src={imageUrl}
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {
-            typesName.map((type, index) => {
-              return <li
+          {typesName.map((type, index) => {
+            return (
+              <li
                 key={type}
-                onClick={() => typeof types[index] === 'number' ? setActiveType(index) : false}
+                onClick={() =>
+                  typeof types[index] === 'number'
+                    ? setActiveType(index)
+                    : false
+                }
                 className={classNames({
                   active: activeType === index,
-                  disabled: !types.includes(index)
+                  disabled: !types.includes(index),
                 })}
-              >{type}</li>
-            })
-          }
+              >
+                {type}
+              </li>
+            )
+          })}
         </ul>
         <ul>
-          {
-            sizesName.map((size, index) =>
-              <li
-                key={size}
-                onClick={() => setActiveSize(size)}
-                className={classNames({
-                  active: activeSize === size,
-                  disabled: !sizes.includes(size)
-                })}
-              >{size} см.</li>
-            )
-          }
+          {sizesName.map((size, index) => (
+            <li
+              key={size}
+              onClick={() => setActiveSize(size)}
+              className={classNames({
+                active: activeSize === size,
+                disabled: !sizes.includes(size),
+              })}
+            >
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
@@ -79,12 +80,12 @@ const PizzaBlock = ({ item, cartItems }) => {
             />
           </svg>
           <span>Добавить</span>
-          {cartItems[id] ? <i>{cartItems[id].itemsCount}</i> : ''}
+          {cartItems[id] ? <i>{cartItems[id].itemsCount}</i> : <i>{0}</i>}
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 //name, imageUrl, price, types, sizes
 PizzaBlock.propTypes = {
   name: PropTypes.string,
@@ -99,4 +100,4 @@ PizzaBlock.defaultProps = {
   types: [],
   sizes: [],
 }
-export default PizzaBlock;
+export default PizzaBlock
